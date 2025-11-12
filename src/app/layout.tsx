@@ -1,5 +1,7 @@
+import { ThemeProvider } from "next-themes";
 import type { Metadata } from "next";
 
+import NavbarExport from "@/components/layout/NavbarExport";
 import { DOMAIN_BASE_URL } from "@/lib/constants";
 import "../styles/globals.css";
 
@@ -62,6 +64,8 @@ export const metadata: Metadata = {
 		//prettier-ignore
 		description: "Monitor npm package downloads, search libraries, and view repository trends with real-time insights.",
 		type: "website",
+		url: new URL(DOMAIN_BASE_URL),
+		emails: "hello@npm.watch",
 		locale: "en",
 		images: [
 			{
@@ -102,12 +106,15 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning={true}>
 			<body
-				suppressHydrationWarning={true}
 				className={`${PoppinsThin.className} ${PoppinsThinItalic.className} ${PoppinsExtraLight.className} ${PoppinsExtraLightItalic.className} ${PoppinsLight.className} ${PoppinsLightItalic.className} ${PoppinsRegular.className} ${PoppinsRegularItalic.className} ${PoppinsMedium.className} ${PoppinsMediumItalic.className} ${PoppinsSemiBold.className} ${PoppinsSemiBoldItalic.className} ${PoppinsBold.className} ${PoppinsBoldItalic.className} ${PoppinsExtraBold.className} ${PoppinsExtraBoldItalic.className} ${PoppinsBlack.className} ${PoppinsBlackItalic.className} antialiased`}
 			>
-				<main>{children}</main>
+				<ThemeProvider enableSystem={false} defaultTheme="dark" attribute={"class"}>
+					<NavbarExport />
+
+					<main className="bg-[#F4F3EF] dark:bg-[#0A0A0A]">{children}</main>
+				</ThemeProvider>
 			</body>
 		</html>
 	);
